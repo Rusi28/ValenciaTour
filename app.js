@@ -1,86 +1,131 @@
-// IDE ÍRD BE A FELADATAIDAT (Koordináták, Leírás, Megoldás)
-    const tasks = [
-        { title: "A Hősök Tere", desc: "Keresd meg az oroszlánt!", lat: 47.8168, lng: 19.0770, answer: "OROSZLÁN" },
-        { title: "A Titkos Kút", desc: "Milyen állat van a kúton?", lat: 47.8168, lng: 19.0770, answer: "HAL" }
-    ];
-
-    let currentIdx = 0;
-    let solvedWords = [];
-
-    // GPS Figyelés
-    if (navigator.geolocation) {
-        navigator.geolocation.watchPosition(position => {
-            const userLat = position.coords.latitude;
-            const userLng = position.coords.longitude;
-            const target = tasks[currentIdx];
-
-            const dist = getDistance(userLat, userLng, target.lat, target.lng);
-
-            if (dist < 20) { // 20 méteres körzet
-                document.getElementById('status').innerText = "📍 Megérkeztél a helyszínre!";
-                showTask();
-            } else {
-                document.getElementById('status').innerText = `📍 Menj közelebb! Távolság: ${Math.round(dist)}m`;
-                document.getElementById('game-ui').classList.add('hidden');
-            }
-        }, err => {
-            document.getElementById('status').innerText = "Hiba: Engedélyezd a GPS-t!";
-        }, { enableHighAccuracy: true });
+// --- FELADATOK ADATBÁZISA ---
+const tasks = [
+    { 
+        title: "Kezdés: A lakásod", 
+        desc: "Készíts egy fotót a bejárati ajtóról!", 
+        lat: 47.5148, lng: 19.0777, // <--- Írd át a saját koordinátáidra teszthez!
+        type: "photo",
+        answer: "KULCS" 
+    },
+    { 
+        title: "Város-Kvíz", 
+        type: "quiz",
+        lat: 47.5150, lng: 19.0780, // A kvíz helyszíne
+        questions: [
+            { img: "parizs.jpg", answer: "Párizs" },
+            { img: "roma.jpg", answer: "Róma" },
+            { img: "london.jpg", answer: "London" },
+            { img: "praga.jpg", answer: "Prága" },
+            { img: "berlin.jpg", answer: "Berlin" }
+        ],
+        finalAnswer: "EURÓPA"
     }
+];
 
-    function showTask() {
-        document.getElementById('game-ui').classList.remove('hidden');
-        document.getElementById('task-title').innerText = tasks[currentIdx].title;
-        document.getElementById('task-desc').innerText = tasks[currentIdx].desc;
-    }
+let currentIdx = 0;
+let currentQuizStep = 0;
+let solvedWords = [];
 
-    // Fotó érzékelése
-    document.getElementById('cameraInput').addEventListener('change', function() {
-        if (this.files.length > 0) {
-            document.getElementById('answer-area').classList.remove('hidden');
-        }
-    });
-
-    function checkWord() {
-        const val = document.getElementById('wordInput').value.toUpperCase().trim();
-        if (val === tasks[currentIdx].answer) {
-            solvedWords.push(val);
-            currentIdx++;
-            if (currentIdx < tasks.length) {
-                alert("Helyes! Irány a következő pont.");
-                resetUI();
-            } else {
-                showFinish();
-            }
+// GPS Követés
+if (navigator.geolocation) {
+    navigator.geolocation.watchPosition(pos => {
+        const dist = getDistance(pos.coords.latitude, pos.coords.longitude, tasks[currentIdx].lat, tasks[currentIdx].lng);
+        if (dist < 20) {
+            document.getElementById('status').innerText = "📍 Megérkeztél!";
+            initTask();
         } else {
-            alert("Sajnos nem ez a jó szó!");
+            document.getElementById('status').innerText = `📍 Menj közelebb! (${Math.round(dist)}m)`;
+            document.getElementById('game-ui').classList.add('hidden');
         }
-    }
+    }, null, { enableHighAccuracy: true });
+}
 
-    function resetUI() {
-        document.getElementById('game-ui').classList.add('hidden');
+function initTask() {
+    const task = tasks[currentIdx];
+    document.getElementById('game-ui').classList.remove('hidden');
+    document.getElementById('task-title').innerText = task.title;
+    
+    if (task.type === "photo") {
+        document.getElementById('task-desc').innerText = task.desc;
+        document.getElementById('photo-area').classList.remove('hidden');
+        document.getElementById('quiz-area').classList.add('hidden');
+    } else if (task.type === "quiz") {
+        showQuizStep();
+    }
+}
+
+// Fotó kezelés
+document.getElementById('cameraInput').addEventListener('change', function() {
+    if (this.files.length > 0) {
+        document.getElementById('answer-area').classList.remove('hidden');
+    }
+});
+
+// Kvíz kezelés
+function showQuizStep() {
+    const task = tasks[currentIdx];
+    const step = task.questions[currentQuizStep];
+    document.getElementById('quiz-area').classList.remove('hidden');
+    document.getElementById('quiz-progress').innerText = `Kép: ${currentQuizStep + 1}/5`;
+    document.getElementById('quiz-image').src = step.img;
+    document.getElementById('quiz-image').classList.add('blur');
+    document.getElementById('quiz-input-group').classList.remove('hidden');
+    document.getElementById('next-quiz-btn').classList.add('hidden');
+    document.getElementById('quizInput').value = "";
+}
+
+function checkQuizAnswer() {
+    const step = tasks[currentIdx].questions[currentQuizStep];
+    const val = document.getElementById('quizInput').value.trim().toLowerCase();
+    if (val === step.answer.toLowerCase()) {
+        document.getElementById('quiz-image').classList.remove('blur');
+        document.getElementById('quiz-input-group').classList.add('hidden');
+        document.getElementById('next-quiz-btn').classList.remove('hidden');
+    } else {
+        alert("Sajnos nem ez a város!");
+    }
+}
+
+function nextQuizStep() {
+    currentQuizStep++;
+    if (currentQuizStep < 5) {
+        showQuizStep();
+    } else {
+        alert("Ügyes vagy! A kódod: " + tasks[currentIdx].finalAnswer);
+        solvedWords.push(tasks[currentIdx].finalAnswer);
+        finishTask();
+    }
+}
+
+function checkWord() {
+    const val = document.getElementById('wordInput').value.toUpperCase().trim();
+    if (val === tasks[currentIdx].answer) {
+        solvedWords.push(val);
+        finishTask();
+    } else { alert("Rossz szó!"); }
+}
+
+function finishTask() {
+    currentIdx++;
+    if (currentIdx < tasks.length) {
+        alert("Jöhet a következő pont!");
         document.getElementById('answer-area').classList.add('hidden');
-        document.getElementById('wordInput').value = "";
-        document.getElementById('cameraInput').value = "";
+        document.getElementById('photo-area').classList.add('hidden');
+    } else {
+        showFinalScreen();
     }
+}
 
-    function showFinish() {
-        document.querySelector('.card').innerHTML = `
-            <h2>Keresztrejtvény kész!</h2>
-            <div style="font-family: monospace; font-size: 20px;">
-                ${solvedWords.join('<br>')}
-            </div>
-            <p><strong>Végső megoldás: VALENCIA</strong></p>
-        `;
-    }
+function showFinalScreen() {
+    document.getElementById('game-ui').classList.add('hidden');
+    document.getElementById('finish-screen').classList.remove('hidden');
+    document.getElementById('final-results').innerHTML = solvedWords.join("<br>");
+}
 
-    // Távolság kalkulátor (Haversine formula)
-    function getDistance(lat1, lon1, lat2, lon2) {
-        const R = 6371e3;
-        const φ1 = lat1 * Math.PI/180;
-        const φ2 = lat2 * Math.PI/180;
-        const Δφ = (lat2-lat1) * Math.PI/180;
-        const Δλ = (lon2-lon1) * Math.PI/180;
-        const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ/2) * Math.sin(Δλ/2);
-        return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    }
+function getDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371e3;
+    const dLat = (lat2-lat1) * Math.PI/180;
+    const dLon = (lon2-lon1) * Math.PI/180;
+    const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
