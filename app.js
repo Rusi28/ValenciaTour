@@ -20,6 +20,13 @@ const tasks = [
         ],
         finalAnswer: "EURÓPA"
     }
+    { 
+    title: "Dódzsó Puzzle", 
+    type: "puzzle",
+    lat: 47.8168, lng: 19.0770, 
+    img: "Gemini_Generated_Image_ppgx3zppgx3zppgx.png", // <--- A feltöltött kép neve
+    finalAnswer: "FEGYELEM"
+    }
 ];
 
 let currentIdx = 0;
@@ -47,7 +54,6 @@ if (navigator.geolocation) {
         }
     }, null, { enableHighAccuracy: true });
 }
-
 function initTask() {
     const task = tasks[currentIdx];
     document.getElementById('game-ui').classList.remove('hidden');
@@ -63,6 +69,11 @@ function initTask() {
         document.getElementById('photo-area').classList.remove('hidden');
     } else if (task.type === "quiz") {
         showQuizStep();
+    } else if (task.type === "puzzle") {
+        document.getElementById('quiz-area').classList.add('hidden');
+        document.getElementById('photo-area').classList.add('hidden');
+        document.getElementById('puzzle-area').classList.remove('hidden');
+        initPuzzle();
     }
 }
 
@@ -163,4 +174,67 @@ function getDistance(lat1, lon1, lat2, lon2) {
     const dLon = (lon2-lon1) * Math.PI/180;
     const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
     return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+let puzzlePieces = [];
+const gridSize = 3;
+
+function initPuzzle() {
+    const task = tasks[currentIdx];
+    const grid = document.getElementById('puzzle-grid');
+    grid.innerHTML = '';
+    puzzlePieces = [...Array(gridSize * gridSize).keys()];
+    
+    // Összekeverés
+    puzzlePieces.sort(() => Math.random() - 0.5);
+
+    renderPuzzle();
+}
+
+function renderPuzzle() {
+    const grid = document.getElementById('puzzle-grid');
+    const task = tasks[currentIdx];
+    grid.innerHTML = '';
+
+    puzzlePieces.forEach((pieceIdx, currentPos) => {
+        const div = document.createElement('div');
+        div.style.width = '100px';
+        div.style.height = '100px';
+        div.style.border = '1px solid #fff';
+        div.style.backgroundImage = `url(${task.img})`;
+        div.style.backgroundSize = '300px 300px';
+        
+        // Kiszámoljuk melyik szelet látszódjon
+        const row = Math.floor(pieceIdx / gridSize);
+        const col = pieceIdx % gridSize;
+        div.style.backgroundPosition = `-${col * 100}px -${row * 100}px`;
+        
+        div.onclick = () => swapPieces(currentPos);
+        grid.appendChild(div);
+    });
+}
+
+function swapPieces(pos) {
+    // Itt egy egyszerűsített verzió: bármelyik kettőt felcserélhetik, 
+    // vagy ha profibbat akarsz, csak a szomszédosat. 
+    // Kezdésnek legyen a csere a legegyszerűbb:
+    if (window.selectedPiece === undefined) {
+        window.selectedPiece = pos;
+        document.getElementById('puzzle-grid').children[pos].style.outline = "3px solid red";
+    } else {
+        const p1 = window.selectedPiece;
+        const p2 = pos;
+        [puzzlePieces[p1], puzzlePieces[p2]] = [puzzlePieces[p2], puzzlePieces[p1]];
+        window.selectedPiece = undefined;
+        renderPuzzle();
+        checkPuzzleWin();
+    }
+}
+
+function checkPuzzleWin() {
+    const isWin = puzzlePieces.every((val, index) => val === index);
+    if (isWin) {
+        alert("Kész a kép! A kódod: " + tasks[currentIdx].finalAnswer);
+        solvedWords.push(tasks[currentIdx].finalAnswer);
+        finishTask();
+    }
 }
