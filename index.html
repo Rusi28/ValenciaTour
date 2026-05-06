@@ -42,6 +42,12 @@
             <input type="text" id="wordInput" placeholder="A megoldó szó...">
             <button class="btn" onclick="checkWord()">Beküldés</button>
         </div>
+
+        <div id="puzzle-area" class="hidden">
+            <p>Rakd ki a képet!</p>
+            <div id="puzzle-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; width: 300px; margin: auto;"></div>
+            <p id="puzzle-status" style="font-size: 12px; margin-top: 10px;"></p>
+        </div>
     </div>
 
     <div id="finish-screen" class="hidden">
