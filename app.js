@@ -12,11 +12,11 @@ const tasks = [
         type: "quiz",
         lat: 47.8168, lng: 19.0770, // A kvíz helyszíne
         questions: [
-            { img: "parizs.jpg", answer: "Párizs" },
-            { img: "roma.jpg", answer: "Róma" },
-            { img: "london.jpg", answer: "London" },
-            { img: "praga.jpg", answer: "Prága" },
-            { img: "berlin.jpg", answer: "Berlin" }
+            { img: "Isztambul.jpg", answer: "Isztambul" },
+            { img: "Marseille.jpg", answer: "Marseille" },
+            { img: "Barcelona.jpg", answer: "Barcelona" },
+            { img: "Szlovénia.jpg", answer: "Szlovénia" },
+            { img: "Porec.jpg", answer: "Porec" }
         ],
         finalAnswer: "EURÓPA"
     }
