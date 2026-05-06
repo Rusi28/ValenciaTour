@@ -3,14 +3,14 @@ const tasks = [
     { 
         title: "Kezdés: A lakásod", 
         desc: "Készíts egy fotót a bejárati ajtóról!", 
-        lat: 47.5148, lng: 19.0777, // <--- Írd át a saját koordinátáidra teszthez!
+        lat: 47.8168, lng: 19.0770, // <--- Írd át a saját koordinátáidra teszthez!
         type: "photo",
         answer: "KULCS" 
     },
     { 
         title: "Város-Kvíz", 
         type: "quiz",
-        lat: 47.5150, lng: 19.0780, // A kvíz helyszíne
+        lat: 47.8168, lng: 19.0770, // A kvíz helyszíne
         questions: [
             { img: "parizs.jpg", answer: "Párizs" },
             { img: "roma.jpg", answer: "Róma" },
