@@ -1,6 +1,6 @@
 // IDE ÍRD BE A FELADATAIDAT (Koordináták, Leírás, Megoldás)
     const tasks = [
-        { title: "A Hősök Tere", desc: "Keresd meg az oroszlánt!", lat: 47.816868, lng: 19.077018, answer: "OROSZLÁN" },
+        { title: "A Hősök Tere", desc: "Keresd meg az oroszlánt!", lat: 47.8168, lng: 19.0770, answer: "OROSZLÁN" },
         { title: "A Titkos Kút", desc: "Milyen állat van a kúton?", lat: 47.5000, lng: 19.0500, answer: "HAL" }
     ];
 
