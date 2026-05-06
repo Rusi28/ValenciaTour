@@ -5,45 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Valencia Tour - Kincskereső</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100-vh; padding: 20px; }
-        .card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
-        .btn { background: #007bff; color: white; border: none; padding: 12px 20px; border-radius: 8px; font-size: 16px; cursor: pointer; width: 100%; margin-top: 10px; }
-        .btn:disabled { background: #ccc; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; display: flex; justify-content: center; padding: 20px; }
+        .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
+        .btn { background: #007bff; color: white; border: none; padding: 12px; border-radius: 8px; font-size: 16px; cursor: pointer; width: 100%; margin-top: 10px; }
         .hidden { display: none; }
-        input[type="text"], input[type="file"] { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
-        #status { font-size: 14px; color: #666; margin-bottom: 15px; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        #status { font-size: 13px; color: #666; margin-bottom: 15px; font-style: italic; }
+        .quiz-img { width: 100%; border-radius: 10px; transition: filter 0.5s ease; margin-bottom: 10px; }
+        .blur { filter: blur(15px); } /* Ez csinálja a homályosítást */
     </style>
 </head>
 <body>
 
 <div class="card">
     <h2 id="task-title">Betöltés...</h2>
-    <div id="status">Várakozás a GPS-re...</div>
+    <div id="status">GPS inicializálása...</div>
     
     <div id="game-ui" class="hidden">
         <p id="task-desc"></p>
         
-        <!-- Fotó részleg -->
-        <div id="photo-area">
-            <p><strong>1. lépés:</strong> Készíts egy fotót!</p>
+        <div id="photo-area" class="hidden">
             <input type="file" id="cameraInput" accept="image/*" capture="camera">
+            <p style="font-size: 12px;">Készíts fotót a továbblépéshez!</p>
         </div>
 
-        <!-- Megoldás részleg -->
+        <div id="quiz-area" class="hidden">
+            <p id="quiz-progress"></p>
+            <img id="quiz-image" class="quiz-img blur" src="">
+            <div id="quiz-input-group">
+                <input type="text" id="quizInput" placeholder="Melyik város ez?">
+                <button class="btn" onclick="checkQuizAnswer()">Ellenőrzés</button>
+            </div>
+            <button id="next-quiz-btn" class="btn hidden" style="background:#28a745;" onclick="nextQuizStep()">Következő kép</button>
+        </div>
+
         <div id="answer-area" class="hidden">
-            <p><strong>2. lépés:</strong> Mi a megoldó szó?</p>
-            <input type="text" id="wordInput" placeholder="Ide írd a szót...">
+            <input type="text" id="wordInput" placeholder="A megoldó szó...">
             <button class="btn" onclick="checkWord()">Beküldés</button>
         </div>
     </div>
 
     <div id="finish-screen" class="hidden">
         <h2>Gratulálok!</h2>
-        <p>Megfejtetted a rejtélyt. A szavaid:</p>
-        <div id="final-crossword" style="font-weight: bold; letter-spacing: 2px;"></div>
+        <div id="final-results"></div>
     </div>
 </div>
 
 <script src="app.js"></script>
-  </body>
+</body>
 </html>
