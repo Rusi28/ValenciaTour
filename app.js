@@ -176,17 +176,13 @@ function getDistance(lat1, lon1, lat2, lon2) {
     return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 }
 let puzzlePieces = [];
-const gridSize = 3;
+const gridSize = 5; // <--- Itt állítod a nehézséget (5x5)
 
 function initPuzzle() {
     const task = tasks[currentIdx];
-    const grid = document.getElementById('puzzle-grid');
-    grid.innerHTML = '';
+    document.getElementById('puzzle-area').classList.remove('hidden');
     puzzlePieces = [...Array(gridSize * gridSize).keys()];
-    
-    // Összekeverés
     puzzlePieces.sort(() => Math.random() - 0.5);
-
     renderPuzzle();
 }
 
@@ -194,19 +190,23 @@ function renderPuzzle() {
     const grid = document.getElementById('puzzle-grid');
     const task = tasks[currentIdx];
     grid.innerHTML = '';
-
+    
+    // Frissítjük a rácsot, hogy 5 oszlop legyen
+    grid.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
+    
     puzzlePieces.forEach((pieceIdx, currentPos) => {
         const div = document.createElement('div');
-        div.style.width = '100px';
-        div.style.height = '100px';
-        div.style.border = '1px solid #fff';
-        div.style.backgroundImage = `url(${task.img})`;
-        div.style.backgroundSize = '300px 300px';
+        const size = 300 / gridSize; // Automatikusan kiszámolja a méretet (60px)
         
-        // Kiszámoljuk melyik szelet látszódjon
+        div.style.width = `${size}px`;
+        div.style.height = `${size}px`;
+        div.style.border = '0.5px solid #fff';
+        div.style.backgroundImage = `url(${task.img})`;
+        div.style.backgroundSize = '300px 300px'; // A teljes kép marad 300px
+        
         const row = Math.floor(pieceIdx / gridSize);
         const col = pieceIdx % gridSize;
-        div.style.backgroundPosition = `-${col * 100}px -${row * 100}px`;
+        div.style.backgroundPosition = `-${col * size}px -${row * size}px`;
         
         div.onclick = () => swapPieces(currentPos);
         grid.appendChild(div);
