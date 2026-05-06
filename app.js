@@ -19,7 +19,7 @@ const tasks = [
             { imgQ: "Porec.jpg", imgA: "PorecM.jpg", answer: "Porec" }
         ],
         finalAnswer: "EURÓPA"
-    }
+    },
     { 
     title: "Dódzsó Puzzle", 
     type: "puzzle",
