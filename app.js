@@ -1,5 +1,32 @@
-// --- FELADATOK ADATBÁZISA ---
+// --- FELADATOK ADATBÁZISA (ÚJ ÚTVONAL) ---
 const tasks = [
+    { 
+        title: "1. Állomás: Edificio del Reloj", 
+        desc: "Keressétek meg az óratorony főépületét a kikötőben!", 
+        lat: 39.4619, lng: -0.3315, // Edificio del Reloj koordináták
+        type: "text_quiz",
+        question: "Mit ábrázol a szélkakas?",
+        answer: "VITORLÁS",
+        finalAnswer: "VITORLÁS" // Ez jelenik meg a siker képernyőn
+    },
+    { 
+        title: "2. Állomás: Palacio de la Música", 
+        desc: "Irány a Turia park és az üvegpalota a szökőkúttal!", 
+        lat: 39.4665, lng: -0.3545, // Palacio de la Música koordináták
+        type: "text_quiz",
+        question: "Ez a zene háza, lássuk mennyire értetek hozzá? Nincs nálatok valami ami nem a tietek? Mi a kedvenc helyük?",
+        answer: "CENTRAL PERK",
+        finalAnswer: "CENTRAL PERK"
+    },
+    { 
+        title: "3. Állomás: Puerta del Mar", 
+        desc: "Keressétek meg a diadalívet a belváros szélén!", 
+        lat: 39.4721, lng: -0.3685, // Puerta del Mar koordináták
+        type: "text_quiz",
+        question: "Ki írt operát a diadalív tetején levő állatról?",
+        answer: "JOHANN STRAUSS",
+        finalAnswer: "JOHANN STRAUSS"
+    },
     { 
         title: "Kezdés: A lakásod", 
         desc: "Készíts egy fotót a bejárati ajtóról!", 
@@ -60,22 +87,50 @@ function initTask() {
     document.getElementById('task-title').innerText = task.title;
     
     // UI takarítás
-    document.getElementById('photo-area').classList.add('hidden');
-    document.getElementById('quiz-area').classList.add('hidden');
-    document.getElementById('answer-area').classList.add('hidden');
+    const areas = ['photo-area', 'quiz-area', 'puzzle-area', 'answer-area', 'text-quiz-area'];
+    areas.forEach(area => {
+        const el = document.getElementById(area);
+        if(el) el.classList.add('hidden');
+    });
     
-    if (task.type === "photo") {
+    if (task.type === "text_quiz") {
+        document.getElementById('task-desc').innerText = task.desc;
+        document.getElementById('text-quiz-area').classList.remove('hidden');
+        document.getElementById('text-question').innerText = task.question;
+        document.getElementById('textInput').value = "";
+    } 
+    // ... a többi típus marad (photo, quiz, puzzle) ...
+    else if (task.type === "photo") {
         document.getElementById('task-desc').innerText = task.desc;
         document.getElementById('photo-area').classList.remove('hidden');
     } else if (task.type === "quiz") {
         showQuizStep();
     } else if (task.type === "puzzle") {
-        document.getElementById('quiz-area').classList.add('hidden');
-        document.getElementById('photo-area').classList.add('hidden');
-        document.getElementById('puzzle-area').classList.remove('hidden');
         initPuzzle();
     }
 }
+//function initTask() {
+//     const task = tasks[currentIdx];
+//     document.getElementById('game-ui').classList.remove('hidden');
+//     document.getElementById('task-title').innerText = task.title;
+    
+    // UI takarítás
+//    document.getElementById('photo-area').classList.add('hidden');
+//    document.getElementById('quiz-area').classList.add('hidden');
+//    document.getElementById('answer-area').classList.add('hidden');
+    
+//    if (task.type === "photo") {
+//        document.getElementById('task-desc').innerText = task.desc;
+//        document.getElementById('photo-area').classList.remove('hidden');
+//    } else if (task.type === "quiz") {
+//        showQuizStep();
+//    } else if (task.type === "puzzle") {
+//        document.getElementById('quiz-area').classList.add('hidden');
+//        document.getElementById('photo-area').classList.add('hidden');
+//        document.getElementById('puzzle-area').classList.remove('hidden');
+//        initPuzzle();
+//    }
+// }
 
 // Város Kvíz Logika
 function showQuizStep() {
