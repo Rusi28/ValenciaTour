@@ -238,3 +238,46 @@ function checkPuzzleWin() {
         finishTask();
     }
 }
+// Ezt a függvényt hívjuk meg, amikor egy feladat KÉSZ
+function finishTask() {
+    // Elrejtünk minden játék elemet
+    document.getElementById('game-ui').classList.add('hidden');
+    document.getElementById('photo-area').classList.add('hidden');
+    document.getElementById('quiz-area').classList.add('hidden');
+    document.getElementById('puzzle-area').classList.add('hidden');
+    document.getElementById('answer-area').classList.add('hidden');
+
+    // Megmutatjuk a siker képernyőt
+    document.getElementById('success-screen').classList.remove('hidden');
+    
+    // Kiírjuk az utolsó megfejtett szót, hogy lássák
+    const lastWord = solvedWords[solvedWords.length - 1];
+    document.getElementById('success-info').innerText = `A kapott kód: ${lastWord}`;
+}
+
+// Ez a függvény fut le, ha rányomnak a TOVÁBB gombra
+function proceedToNextLocation() {
+    document.getElementById('success-screen').classList.add('hidden');
+    
+    currentIdx++; // Itt lépünk ténylegesen a következő feladatra
+    currentQuizStep = 0;
+    isTaskActive = false; // GPS újra aktiválása az új ponthoz
+
+    if (currentIdx < tasks.length) {
+        // Még nincs vége, reseteljük a felületet és várjuk a következő GPS pontot
+        resetUI();
+        document.getElementById('status').innerText = "Keresd a következő helyszínt!";
+    } else {
+        // Ha nincs több feladat, jöhet a végső képernyő
+        showFinalScreen();
+    }
+}
+
+// A korábbi resetUI-t egészítsd ki ennyivel:
+function resetUI() {
+    document.getElementById('game-ui').classList.add('hidden');
+    document.getElementById('wordInput').value = "";
+    document.getElementById('cameraInput').value = "";
+    document.getElementById('quizInput').value = "";
+    window.selectedPiece = undefined; // Puzzle válogatás törlése
+}
