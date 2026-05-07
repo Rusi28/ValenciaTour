@@ -12,11 +12,11 @@ const tasks = [
         type: "quiz",
         lat: 47.8168, lng: 19.0770, // A kvíz helyszíne
         questions: [
-            { imgQ: "Isztambul.jpg", imgA: "IsztambulM.jpg", answer: "Isztambul" },
-            { imgQ: "Marseille.jpg", imgA: "MarseilleM.jpg", answer: "Marseille" },
-            { imgQ: "Barcelona.jpg", imgA: "BarcelonaM.jpg", answer: "Barcelona" },
-            { imgQ: "Szlovénia.jpg", imgA: "SzlovéniaM.jpg", answer: "Szlovénia" },
-            { imgQ: "Porec.jpg", imgA: "PorecM.jpg", answer: "Porec" }
+            { imgQ: "Barcelona1.jpg", imgA: "BarcelonaM1.jpg", answer: "Barcelona" },
+            { imgQ: "Isztambul1.jpg", imgA: "IsztambulM1.jpg", answer: "Isztambul" },
+            { imgQ: "Marseille1.jpg", imgA: "MarseilleM1.jpg", answer: "Marseille" },
+            { imgQ: "Szlovénia1.jpg", imgA: "SzlovéniaM1.jpg", answer: "Szlovénia" },
+            { imgQ: "Porec1.jpg", imgA: "PorecM1.jpg", answer: "Porec" }
         ],
         finalAnswer: "EURÓPA"
     },
@@ -24,7 +24,7 @@ const tasks = [
     title: "Dódzsó Puzzle", 
     type: "puzzle",
     lat: 47.8168, lng: 19.0770, 
-    img: "Gemini_Generated_Image_ppgx3zppgx3zppgx.png", // <--- A feltöltött kép neve
+    img: "Gemini_Generated.png", // <--- A feltöltött kép neve
     finalAnswer: "FEGYELEM"
     }
 ];
