@@ -196,6 +196,22 @@ function checkWord() {
     } else { alert("Rossz szó! Próbáld újra."); }
 }
 
+// Új ellenőrző függvény a szöveges kvízhez
+function checkTextAnswer() {
+    const task = tasks[currentIdx];
+    const val = document.getElementById('textInput').value.trim().toUpperCase();
+    
+    // Ékezetmentesítés a biztonság kedvéért
+    const normalize = (str) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
+
+    if (normalize(val) === normalize(task.answer)) {
+        solvedWords.push(task.finalAnswer);
+        finishTask();
+    } else {
+        alert("Sajnos nem ez a helyes válasz! Próbálkozzatok még!");
+    }
+}
+
 function finishTask() {
     currentIdx++;
     currentQuizStep = 0; // Kvíz számláló visszaállítása
