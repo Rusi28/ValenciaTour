@@ -42,7 +42,14 @@
             <input type="text" id="wordInput" placeholder="A megoldó szó...">
             <button class="btn" onclick="checkWord()">Beküldés</button>
         </div>
-
+        
+        <div id="text-quiz-area" class="hidden">
+        <p id="text-question" style="font-weight: bold; margin: 15px 0;"></p>
+        <input type="text" id="textInput" placeholder="Írd ide a választ...">
+        <button class="btn" onclick="checkTextAnswer()">Beküldés</button>
+        
+        </div>
+       
         <div id="puzzle-area" class="hidden">
             <p>Rakd ki a képet!</p>
             <div id="puzzle-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; width: 300px; margin: auto;"></div>
