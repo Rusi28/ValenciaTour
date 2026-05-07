@@ -24,7 +24,7 @@ const tasks = [
     title: "Dódzsó Puzzle", 
     type: "puzzle",
     lat: 47.8168, lng: 19.0770, 
-    img: "Gemini_Generated.png", // <--- A feltöltött kép neve
+    img: "Gemini_Generated.jpg", // <--- A feltöltött kép neve
     finalAnswer: "FEGYELEM"
     }
 ];
