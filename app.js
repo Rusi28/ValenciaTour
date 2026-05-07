@@ -242,10 +242,24 @@ function checkPuzzleWin() {
 function finishTask() {
     // Elrejtünk minden játék elemet
     document.getElementById('game-ui').classList.add('hidden');
-    document.getElementById('photo-area').classList.add('hidden');
-    document.getElementById('quiz-area').classList.add('hidden');
-    document.getElementById('puzzle-area').classList.add('hidden');
-    document.getElementById('answer-area').classList.add('hidden');
+    
+    // UI takarítás (hogy ne maradjanak ott a régi elemek)
+    const areas = ['photo-area', 'quiz-area', 'puzzle-area', 'answer-area'];
+    areas.forEach(area => document.getElementById(area).classList.add('hidden'));
+
+    // --- JUTALOMKÉP BEÁLLÍTÁSA ---
+    // AcurrentIdx 0-ról indul, a képek pedig 1-től. 
+    // Pl. ha a 0. feladat kész, az 1.jpg jelenik meg.
+    const rewardPhotoNum = currentIdx + 1;
+    
+    // Biztosítjuk, hogy csak 1-6 közötti képet próbáljon betölteni
+    if (rewardPhotoNum >= 1 && rewardPhotoNum <= 6) {
+        document.getElementById('reward-image').src = `${rewardPhotoNum}.jpg`;
+        document.getElementById('reward-image').style.display = 'block'; // Mutatjuk
+    } else {
+        // Ha nincs több jutalomkép, elrejtjük az img taget
+        document.getElementById('reward-image').style.display = 'none';
+    }
 
     // Megmutatjuk a siker képernyőt
     document.getElementById('success-screen').classList.remove('hidden');
