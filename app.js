@@ -3,7 +3,15 @@ const tasks = [
     { title: "2A Lépés: Palacio de la Música", desc: "Irány a Turia park!", lat: 47.8168, lng: 19.0770, type: "info_step", infoText: "Van nálatok valami, ami nem a tiétek! Ha megtaláljátok, akkor ti is bebizonyíthatjátok, hogy értetek a zenéhez. Megvan?", buttonText: "MEGVAN", finalAnswer: "ZENÉSZEK" },
     { title: "2. Állomás: Palacio de la Música", desc: "Irány a Turia park és a szökőkút!", lat: 47.8168, lng: 19.0770, type: "text_quiz", question: "Mi a kedvenc helyük?", answer: "CENTRAL PERK", finalAnswer: "CENTRAL PERK" },
     { title: "3. Állomás: Puerta del Mar", desc: "Keressétek meg a diadalívet!", lat: 47.8168, lng: 19.0770, type: "text_quiz", question: "Ki írt operát a diadalív tetején levő állatról?", answer: "JOHANN STRAUSS", finalAnswer: "JOHANN STRAUSS" },
-    { title: "4. Állomás: Torres de Serranos", desc: "Másszatok fel a toronyba!", lat: 47.8168, lng: 19.0770, type: "altitude_challenge", targetDiff: 20, finalAnswer: "MAGASSÁG" },
+    { 
+    title: "4. Állomás: Torres de Serranos", 
+    desc: "Másszatok fel a toronyba!", 
+    lat: 47.8168, lng: 19.0770, 
+    type: "altitude_challenge", 
+    targetDiff: 20, 
+    radius: 50, // Speciális nagyobb sugár ennél a feladatnál
+    finalAnswer: "MAGASSÁG" 
+    },
     { title: "5. Állomás: Fotó", desc: "Készíts egy fotót a helyszínen!", lat: 47.8168, lng: 19.0770, type: "photo", answer: "KULCS" },
     { title: "6. Állomás: Város-Kvíz", type: "quiz", lat: 47.8168, lng: 19.0770, questions: [
         { imgQ: "Barcelona1.jpg", imgA: "BarcelonaM1.jpg", answer: "Barcelona" },
@@ -24,25 +32,39 @@ let maxDiff = 0;
 let puzzlePieces = [];
 const gridSize = 5;
 
+// --- JAVÍTOTT GPS FIGYELÉS ---
 if (navigator.geolocation) {
     navigator.geolocation.watchPosition(pos => {
         const task = tasks[currentIdx];
-        const dist = getDistance(pos.coords.latitude, pos.coords.longitude, task.lat, task.lng);
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
         
-        if (dist < 20) {
-            document.getElementById('status').innerText = "📍 Megérkeztél!";
-            if (!isTaskActive) { initTask(); isTaskActive = true; }
+        const dist = getDistance(lat, lng, task.lat, task.lng);
+        
+        // Egyedi sugár kezelése (ha nincs megadva, marad a 20m)
+        const activeRadius = task.radius || 20;
+
+        if (dist < activeRadius) {
+            document.getElementById('status').innerText = "📍 Megérkeztél a helyszínre!";
             
-            // MAGASSÁG LOGIKA JAVÍTVA
-            if (task.type === "altitude_challenge" && pos.coords.altitude !== null) {
-                if (startAltitude === null) {
-                    startAltitude = pos.coords.altitude;
+            if (!isTaskActive) { 
+                initTask(); 
+                isTaskActive = true; 
+                // Eltároljuk a kezdőpontot a "csaláshoz"
+                window.startLat = lat;
+                window.startLng = lng;
+            }
+            
+            // "MAGASSÁG" KIHÍVÁS CSALÁSSAL (Távolságot mérünk a kezdőponttól)
+            if (task.type === "altitude_challenge") {
+                const movedDist = getDistance(lat, lng, window.startLat, window.startLng);
+                
+                if (movedDist > maxDiff) { 
+                    maxDiff = movedDist; 
                 }
-                const currentDiff = Math.abs(pos.coords.altitude - startAltitude);
-                if (currentDiff > maxDiff) { 
-                    maxDiff = currentDiff; // Csak nőhet, nem ugrik vissza!
-                }
+                
                 document.getElementById('alt-progress').innerText = `Megtett szint: ${Math.round(maxDiff)} / ${task.targetDiff} m`;
+                
                 if (maxDiff >= task.targetDiff) {
                     solvedWords.push(task.finalAnswer);
                     finishTask();
