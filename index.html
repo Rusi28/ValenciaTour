@@ -8,71 +8,51 @@
         body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; display: flex; justify-content: center; padding: 20px; }
         .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
         .btn { background: #007bff; color: white; border: none; padding: 12px; border-radius: 8px; font-size: 16px; cursor: pointer; width: 100%; margin-top: 10px; }
-        .hidden { display: none; }
+        .hidden { display: none !important; }
         input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
         #status { font-size: 13px; color: #666; margin-bottom: 15px; font-style: italic; }
-        .quiz-img { width: 100%; border-radius: 10px; margin-bottom: 10px; }
+        #success-screen { text-align: center; display: flex; flex-direction: column; align-items: center; }
+        #reward-image { width: 100%; max-width: 200px; border-radius: 15px; margin: 20px 0; }
     </style>
 </head>
 <body>
-
 <div class="card">
     <h2 id="task-title">Betöltés...</h2>
     <div id="status">GPS inicializálása...</div>
     
     <div id="game-ui" class="hidden">
         <p id="task-desc"></p>
-        
+        <div id="text-quiz-area" class="hidden">
+            <p id="text-question" style="font-weight: bold;"></p>
+            <input type="text" id="textInput" placeholder="Válasz...">
+            <button class="btn" onclick="checkTextAnswer()">Beküldés</button>
+        </div>
         <div id="photo-area" class="hidden">
             <input type="file" id="cameraInput" accept="image/*" capture="camera">
-            <p style="font-size: 12px;">Készíts fotót a továbblépéshez!</p>
         </div>
-
         <div id="quiz-area" class="hidden">
-            <p id="quiz-progress"></p>
-            <img id="quiz-image" class="quiz-img blur" src="">
-            <div id="quiz-input-group">
-                <input type="text" id="quizInput" placeholder="Melyik város ez?">
-                <button class="btn" onclick="checkQuizAnswer()">Ellenőrzés</button>
-            </div>
-            <button id="next-quiz-btn" class="btn hidden" style="background:#28a745;" onclick="nextQuizStep()">Következő kép</button>
+            <img id="quiz-image" style="width:100%">
+            <input type="text" id="quizInput">
+            <button class="btn" onclick="checkQuizAnswer()">OK</button>
         </div>
-
-        <div id="answer-area" class="hidden">
-            <input type="text" id="wordInput" placeholder="A megoldó szó...">
-            <button class="btn" onclick="checkWord()">Beküldés</button>
-        </div>
-        
-        <div id="text-quiz-area" class="hidden">
-        <p id="text-question" style="font-weight: bold; margin: 15px 0;"></p>
-        <input type="text" id="textInput" placeholder="Írd ide a választ...">
-        <button class="btn" onclick="checkTextAnswer()">Beküldés</button>
-        
-        </div>
-       
         <div id="puzzle-area" class="hidden">
-            <p>Rakd ki a képet!</p>
-            <div id="puzzle-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; width: 300px; margin: auto;"></div>
-            <p id="puzzle-status" style="font-size: 12px; margin-top: 10px;"></p>
+            <div id="puzzle-grid" style="display:grid; grid-template-columns: repeat(3, 1fr); gap:2px;"></div>
         </div>
     </div>
-    
+
     <div id="success-screen" class="hidden">
         <h2 style="color: #28a745;">SIKERÜLT! 🏆</h2>
-    
-        <img id="reward-image" src="" style="width: 100%; max-width: 200px; border-radius: 15px; margin: 20px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
-    
+        <img id="reward-image" src="">
         <p>Ezt is megoldottad!</p>
-        <div id="success-info" style="font-size: 18px; font-weight: bold; margin-bottom: 20px;"></div>
-        <button class="btn" style="background: #28a745;" onclick="proceedToNextLocation()">TOVÁBB</button>
+        <div id="success-info" style="font-weight: bold;"></div>
+        <button class="btn" style="background:#28a745;" onclick="proceedToNextLocation()">TOVÁBB</button>
     </div>
-    
+
     <div id="finish-screen" class="hidden">
         <h2>Gratulálok!</h2>
         <div id="final-results"></div>
     </div>
 </div>
-
 <script src="app.js"></script>
 </body>
 </html>
