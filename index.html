@@ -34,12 +34,17 @@
         <div id="answer-area" class="hidden">
             <input type="text" id="wordInput" placeholder="A megoldó szó...">
             <button class="btn" onclick="checkWord()">Beküldés</button>
+        <div id="quiz-area" class="hidden">
+            <p id="quiz-progress"></p>
+            <img id="quiz-image" class="quiz-img" src="">
+    
+            <div id="quiz-input-group">
+            <input type="text" id="quizInput" placeholder="Melyik város ez?">
+            <button class="btn" onclick="checkQuizAnswer()">Ellenőrzés</button>
         </div>
-            <div id="quiz-area" class="hidden">
-            <img id="quiz-image" style="width:100%">
-            <input type="text" id="quizInput">
-            <button class="btn" onclick="checkQuizAnswer()">OK</button>
-        </div>
+    
+    <button id="next-quiz-btn" class="btn hidden" style="background:#28a745;" onclick="nextQuizStep()">Következő kép</button>
+    </div>
         <div id="puzzle-area" class="hidden">
             <div id="puzzle-grid" style="display:grid; grid-template-columns: repeat(3, 1fr); gap:2px;"></div>
         </div>
