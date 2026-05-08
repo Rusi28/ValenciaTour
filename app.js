@@ -12,6 +12,15 @@ const tasks = [
     radius: 50, // Speciális nagyobb sugár ennél a feladatnál
     finalAnswer: "MAGASSÁG" 
     },
+    { 
+    title: "5. Állomás: Valencia Cathedral", 
+    desc: "Keressétek meg a lenyűgöző katedrálist a Plaza de l'Almoina felől!", 
+    lat: 39.4753, lng: -0.3751, // Valencia Cathedral koordináták
+    type: "text_quiz",
+    question: "Ki volt a leghíresebb keresője a bent őrzött erekjének?",
+    answer: "INDIANA JONES",
+    finalAnswer: "INDIANA JONES"
+    },
     { title: "5. Állomás: Fotó", desc: "Készíts egy fotót a helyszínen!", lat: 47.8168, lng: 19.0770, type: "photo", answer: "KULCS" },
     { title: "6. Állomás: Város-Kvíz", type: "quiz", lat: 47.8168, lng: 19.0770, questions: [
         { imgQ: "Barcelona1.jpg", imgA: "BarcelonaM1.jpg", answer: "Barcelona" },
