@@ -10,7 +10,7 @@ const tasks = [
     { title: "7. Állomás: Placa de Bous", desc: "Készítsetek fotót ott ahol a szegény bikákat megölik!", lat: 47.8168, lng: 19.0770, type: "photo", answer: "KULCS" },
     { title: "8A Lépés: Mercat de Colon", desc: "Irány kóstolni!", lat: 47.8168, lng: 19.0770, type: "info_step", infoText: "Lehet találtok is valamit. Megvan?", buttonText: "MEGVAN", finalAnswer: "KÓSTOLÓ" },
     { title: "8. Állomás: Mercat de Colon", desc: "Játszátok le!", lat: 47.8168, lng: 19.0770, type: "text_quiz", question: "Ki volt a hangja a főgonosznak?", answer: "FORGÁCS PÉTER", finalAnswer: "FORGÁCS PÉTER" },
-    { title: "9. Állomás: HEMISFÈRIC", type: "puzzle", lat: 47.8168, lng: 19.0770, infoText: "Ez a tudomány helye, lássuk mit tudtok?", img: "Gemini_Generated.jpg", finalAnswer: "TUDOMÁNY" }, // Itt hiányzott a vessző!
+    { title: "9. Állomás: HEMISFÈRIC", type: "puzzle", lat: 47.8168, lng: 19.0770, infoText: "Ez a tudomány helye, lássuk mit tudtok?", img: "Gemini_Generated.jpg", finalAnswer: "TUDOMÁNY" },
     { title: "10. Állomás: Oceanogràfic València", type: "quiz", lat: 47.8168, lng: 19.0770, infoText: "Ez az óceán világa, de hol voltatok eddig?", questions: [
         { imgQ: "Barcelona1.jpg", imgA: "BarcelonaM1.jpg", answer: "Barcelona" },
         { imgQ: "Isztambul1.jpg", imgA: "IsztambulM1.jpg", answer: "Isztambul" },
