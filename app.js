@@ -194,11 +194,34 @@ function finishTask() {
 
 function proceedToNextLocation() {
     document.getElementById('success-screen').classList.add('hidden');
-    currentIdx++; currentQuizStep = 0; isTaskActive = false;
-    if (currentIdx < tasks.length) { document.getElementById('status').innerText = "Keresd a következő helyszínt!"; }
-    else {
+    currentIdx++; 
+    currentQuizStep = 0; 
+    isTaskActive = false;
+    
+    if (currentIdx < tasks.length) { 
+        document.getElementById('status').innerText = "Keresd a következő helyszínt!"; 
+    } else {
+        // VÉGE A JÁTÉKNAK
+        document.getElementById('status').innerText = "Célba értetek!";
         document.getElementById('finish-screen').classList.remove('hidden');
-        document.getElementById('final-results').innerHTML = solvedWords.join("<br>");
+        // Elrejtjük a régi listát, ha benne maradt volna
+        if(document.getElementById('final-results')) {
+            document.getElementById('final-results').classList.add('hidden');
+        }
+    }
+}
+
+function checkFinalWeeks() {
+    const val = document.getElementById('weeksInput').value;
+    // A pontos érték 30 évre: 1565
+    if (parseInt(val) === 1565) {
+        document.getElementById('final-challenge-area').classList.add('hidden');
+        document.getElementById('re-show-first').classList.remove('hidden');
+        
+        // Opcionális: Konfetti vagy extra üzenet
+        alert("Pontosan! 1565 csodálatos hét!");
+    } else {
+        alert("Nem pontos... Számoljatok utána! (Segítség: 30 év)");
     }
 }
 
