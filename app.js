@@ -31,6 +31,9 @@ let startAltitude = null;
 let maxDiff = 0;
 let puzzlePieces = [];
 const gridSize = 5;
+let totalMovedDistance = 0; // Ebben gyűjtjük a megtett métereket
+let lastLat = null;
+let lastLng = null;
 
 // --- JAVÍTOTT GPS FIGYELÉS ---
 if (navigator.geolocation) {
@@ -39,45 +42,47 @@ if (navigator.geolocation) {
         const lat = pos.coords.latitude;
         const lng = pos.coords.longitude;
         
-        const dist = getDistance(lat, lng, task.lat, task.lng);
-        
-        // Egyedi sugár kezelése (ha nincs megadva, marad a 20m)
+        const distFromTarget = getDistance(lat, lng, task.lat, task.lng);
         const activeRadius = task.radius || 20;
 
-        if (dist < activeRadius) {
-            document.getElementById('status').innerText = "📍 Megérkeztél a helyszínre!";
+        if (distFromTarget < activeRadius) {
+            document.getElementById('status').innerText = "📍 Területen belül vagy!";
             
             if (!isTaskActive) { 
                 initTask(); 
                 isTaskActive = true; 
-                // Eltároljuk a kezdőpontot a "csaláshoz"
-                window.startLat = lat;
-                window.startLng = lng;
+                totalMovedDistance = 0; // Resetelés az induláskor
+                lastLat = lat;
+                lastLng = lng;
             }
             
-            // "MAGASSÁG" KIHÍVÁS CSALÁSSAL (Távolságot mérünk a kezdőponttól)
+            // TÉNYLEGES MEGTETT ÚT SZÁMÍTÁSA (Kumulatív)
             if (task.type === "altitude_challenge") {
-                const movedDist = getDistance(lat, lng, window.startLat, window.startLng);
+                // Kiszámoljuk az elmozdulást az előző mérés óta
+                const moveStep = getDistance(lat, lng, lastLat, lastLng);
                 
-                if (movedDist > maxDiff) { 
-                    maxDiff = movedDist; 
+                // Csak akkor adjuk hozzá, ha a mérés nem "ugrálás" (pl. > 1 méter)
+                if (moveStep > 1 && moveStep < 10) { 
+                    totalMovedDistance += moveStep;
+                    lastLat = lat; // Frissítjük az utolsó ismert pontot
+                    lastLng = lng;
                 }
                 
-                document.getElementById('alt-progress').innerText = `Megtett szint: ${Math.round(maxDiff)} / ${task.targetDiff} m`;
+                document.getElementById('alt-progress').innerText = `Megtett út: ${Math.round(totalMovedDistance)} / ${task.targetDiff} m`;
                 
-                if (maxDiff >= task.targetDiff) {
+                if (totalMovedDistance >= task.targetDiff) {
                     solvedWords.push(task.finalAnswer);
                     finishTask();
                 }
             }
         } else {
-            document.getElementById('status').innerText = `📍 Távolság: ${Math.round(dist)}m`;
+            document.getElementById('status').innerText = `📍 Menj a helyszínre! Távolság: ${Math.round(distFromTarget)}m`;
             document.getElementById('game-ui').classList.add('hidden');
             isTaskActive = false;
+            lastLat = null; // Ha kimegy a körből, nullázzuk az előző pontot
         }
-    }, null, { enableHighAccuracy: true });
+    }, null, { enableHighAccuracy: true, maximumAge: 1000 });
 }
-
 function initTask() {
     const task = tasks[currentIdx];
     document.getElementById('game-ui').classList.remove('hidden');
