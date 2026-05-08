@@ -7,7 +7,7 @@ const tasks = [
     { title: "4. Állomás: Torres de Serranos", desc: "Másszatok fel a toronyba!", lat: 47.8168, lng: 19.0770, type: "altitude_challenge", targetDiff: 20, radius: 50, finalAnswer: "MAGASSÁG" },
     { title: "5. Állomás: Selyembörze (La Lonja)", desc: "Látogassatok el a tőzsdepalotához a központi piaccal szemben!", lat: 47.8168, lng: 19.0770, type: "text_quiz", question: "Mik nőnek az udvaron?", answer: "NARANCSOK", finalAnswer: "NARANCSOK" },
     { title: "6. Állomás: Valencia Cathedral", desc: "Keressétek meg a katedrálist a Plaza de l'Almoina felől!", lat: 47.8168, lng: 19.0770, type: "text_quiz", question: "Ki volt a leghíresebb keresője a bent őrzött erekjének?", answer: "ARTHUR", finalAnswer: "ARTHUR" },
-    { title: "7. Állomás: Placa de Bous", desc: "Készítsetek fotót ott ahol a szegény bikákat megölik!", lat: 47.8168, lng: 19.0770, type: "photo", question: "Mivel őlték őket?" answer: "PIKA" },
+    { title: "7. Állomás: Placa de Bous", desc: "Készítsetek fotót ott ahol a szegény bikákat megölik!", lat: 47.8168, lng: 19.0770, type: "photo", question: "Mivel őlték őket?", answer: "PIKA" },
     { title: "8A Lépés: Mercat de Colon", desc: "Irány kóstolni!", lat: 47.8168, lng: 19.0770, type: "info_step", infoText: "Lehet találtok is valamit. Megvan?", buttonText: "MEGVAN", finalAnswer: "KÓSTOLÓ" },
     { title: "8. Állomás: Mercat de Colon", desc: "Játszátok le!", lat: 47.8168, lng: 19.0770, type: "text_quiz", question: "Ki volt a hangja a főgonosznak?", answer: "FORGÁCS PÉTER", finalAnswer: "FORGÁCS PÉTER" },
     { title: "9. Állomás: HEMISFÈRIC", type: "puzzle", lat: 47.8168, lng: 19.0770, infoText: "Ez a tudomány helye, lássuk mit tudtok?", img: "Gemini_Generated.jpg", finalAnswer: "STRENGTH" },
