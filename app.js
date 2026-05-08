@@ -115,30 +115,62 @@ function checkTextAnswer() {
     } else { alert("Nem jó!"); }
 }
 
+function showQuizStep() {
+    const task = tasks[currentIdx];
+    
+    // Ellenőrizzük, van-e még kérdés a listában
+    if (task.questions && task.questions[currentQuizStep]) {
+        const step = task.questions[currentQuizStep];
+        
+        // Terület megjelenítése
+        document.getElementById('quiz-area').classList.remove('hidden');
+        
+        // Haladás jelzése (pl. Kép: 1/5)
+        const progressEl = document.getElementById('quiz-progress');
+        if (progressEl) progressEl.innerText = `Kép: ${currentQuizStep + 1}/${task.questions.length}`;
+        
+        // Kérdés képének beállítása
+        document.getElementById('quiz-image').src = step.imgQ;
+        
+        // UI reset: Input mutat, Következő gomb elrejt
+        document.getElementById('quiz-input-group').classList.remove('hidden');
+        document.getElementById('next-quiz-btn').classList.add('hidden');
+        document.getElementById('quizInput').value = "";
+    }
+}
+
 function checkQuizAnswer() {
-    const step = tasks[currentIdx].questions[currentQuizStep];
+    const task = tasks[currentIdx];
+    const step = task.questions[currentQuizStep];
     const val = document.getElementById('quizInput').value.trim().toLowerCase();
+    
+    // Ékezetmentesítés (Normalizálás)
     const norm = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
     if (norm(val) === norm(step.answer)) {
+        // HELYES VÁLASZ: Megoldó kép (M-es) betöltése
         document.getElementById('quiz-image').src = step.imgA;
+        
+        // UI váltás: Mező elrejt, Zöld gomb megjelenik
         document.getElementById('quiz-input-group').classList.add('hidden');
         document.getElementById('next-quiz-btn').classList.remove('hidden');
-    } else { alert("Nem jó város!"); }
+    } else {
+        alert("Sajnos nem ez a város! Próbáld újra.");
+    }
 }
 
 function nextQuizStep() {
+    const task = tasks[currentIdx];
     currentQuizStep++;
-    if (currentQuizStep < 5) { showQuizStep(); }
-    else { solvedWords.push(tasks[currentIdx].finalAnswer); finishTask(); }
-}
 
-function showQuizStep() {
-    const step = tasks[currentIdx].questions[currentQuizStep];
-    document.getElementById('quiz-area').classList.remove('hidden');
-    document.getElementById('quiz-image').src = step.imgQ;
-    document.getElementById('quiz-input-group').classList.remove('hidden');
-    document.getElementById('next-quiz-btn').classList.add('hidden');
-    document.getElementById('quizInput').value = "";
+    // Ha van még hátra kép a feladatban
+    if (currentQuizStep < task.questions.length) {
+        showQuizStep();
+    } else {
+        // Ha elfogyott az összes kép (pl. mind az 5 kész)
+        solvedWords.push(task.finalAnswer);
+        finishTask();
+    }
 }
 
 // Puzzle Logika
