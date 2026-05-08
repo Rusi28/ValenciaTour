@@ -13,6 +13,7 @@
         #status { font-size: 13px; color: #666; margin-bottom: 15px; font-style: italic; }
         #success-screen { text-align: center; display: flex; flex-direction: column; align-items: center; }
         #reward-image { width: 100%; max-width: 200px; border-radius: 15px; margin: 20px 0; }
+        .quiz-img { width: 100%; border-radius: 10px; margin-bottom: 10px; }
     </style>
 </head>
 <body>
@@ -22,11 +23,13 @@
     
     <div id="game-ui" class="hidden">
         <p id="task-desc"></p>
+        
         <div id="text-quiz-area" class="hidden">
             <p id="text-question" style="font-weight: bold;"></p>
             <input type="text" id="textInput" placeholder="Válasz...">
             <button class="btn" onclick="checkTextAnswer()">Beküldés</button>
         </div>
+
         <div id="photo-area" class="hidden">
             <input type="file" id="cameraInput" accept="image/*" capture="camera">
             <p style="font-size: 12px;">Készíts fotót a továbblépéshez!</p>
@@ -34,19 +37,20 @@
         <div id="answer-area" class="hidden">
             <input type="text" id="wordInput" placeholder="A megoldó szó...">
             <button class="btn" onclick="checkWord()">Beküldés</button>
+        </div>
+
         <div id="quiz-area" class="hidden">
             <p id="quiz-progress"></p>
             <img id="quiz-image" class="quiz-img" src="">
-    
             <div id="quiz-input-group">
-            <input type="text" id="quizInput" placeholder="Melyik város ez?">
-            <button class="btn" onclick="checkQuizAnswer()">Ellenőrzés</button>
+                <input type="text" id="quizInput" placeholder="Melyik város ez?">
+                <button class="btn" onclick="checkQuizAnswer()">Ellenőrzés</button>
+            </div>
+            <button id="next-quiz-btn" class="btn hidden" style="background:#28a745;" onclick="nextQuizStep()">Következő kép</button>
         </div>
-    
-    <button id="next-quiz-btn" class="btn hidden" style="background:#28a745;" onclick="nextQuizStep()">Következő kép</button>
-    </div>
+
         <div id="puzzle-area" class="hidden">
-            <div id="puzzle-grid" style="display:grid; grid-template-columns: repeat(3, 1fr); gap:2px;"></div>
+            <div id="puzzle-grid" style="display:grid; grid-template-columns: repeat(5, 1fr); gap:2px; width: 300px; margin: auto;"></div>
         </div>
     </div>
 
