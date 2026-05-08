@@ -1,4 +1,3 @@
-@@ -1,71 +1,78 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
@@ -20,10 +19,10 @@
 <div class="card">
     <h2 id="task-title">Betöltés...</h2>
     <div id="status">GPS inicializálása...</div>
-
+    
     <div id="game-ui" class="hidden">
         <p id="task-desc"></p>
-
+        
         <div id="photo-area" class="hidden">
             <input type="file" id="cameraInput" accept="image/*" capture="camera">
             <p style="font-size: 12px;">Készíts fotót a továbblépéshez!</p>
@@ -43,7 +42,6 @@
             <input type="text" id="wordInput" placeholder="A megoldó szó...">
             <button class="btn" onclick="checkWord()">Beküldés</button>
         </div>
-
         
         <div id="text-quiz-area" class="hidden">
         <p id="text-question" style="font-weight: bold; margin: 15px 0;"></p>
@@ -58,17 +56,17 @@
             <p id="puzzle-status" style="font-size: 12px; margin-top: 10px;"></p>
         </div>
     </div>
-
+    
     <div id="success-screen" class="hidden">
         <h2 style="color: #28a745;">SIKERÜLT! 🏆</h2>
-
+    
         <img id="reward-image" src="" style="width: 100%; max-width: 200px; border-radius: 15px; margin: 20px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
-
+    
         <p>Ezt is megoldottad!</p>
         <div id="success-info" style="font-size: 18px; font-weight: bold; margin-bottom: 20px;"></div>
         <button class="btn" style="background: #28a745;" onclick="proceedToNextLocation()">TOVÁBB</button>
     </div>
-
+    
     <div id="finish-screen" class="hidden">
         <h2>Gratulálok!</h2>
         <div id="final-results"></div>
