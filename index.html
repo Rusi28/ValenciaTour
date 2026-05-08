@@ -29,8 +29,13 @@
         </div>
         <div id="photo-area" class="hidden">
             <input type="file" id="cameraInput" accept="image/*" capture="camera">
+            <p style="font-size: 12px;">Készíts fotót a továbblépéshez!</p>
         </div>
-        <div id="quiz-area" class="hidden">
+        <div id="answer-area" class="hidden">
+            <input type="text" id="wordInput" placeholder="A megoldó szó...">
+            <button class="btn" onclick="checkWord()">Beküldés</button>
+        </div>
+            <div id="quiz-area" class="hidden">
             <img id="quiz-image" style="width:100%">
             <input type="text" id="quizInput">
             <button class="btn" onclick="checkQuizAnswer()">OK</button>
