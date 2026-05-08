@@ -36,15 +36,24 @@ const tasks = [
         answer: "JOHANN STRAUSS",
         finalAnswer: "JOHANN STRAUSS"
     },
+    // A tasks tömb elejére vagy a megfelelő helyre szúrd be:
     { 
-        title: "4. Állomás: Fotó", 
+    title: "4. Állomás: Torres de Serranos", 
+    desc: "Itt az ideje egy kis edzésnek! Másszatok fel a toronyba vagy mozogjatok a lépcsőkön!", 
+    lat: 47.8168, lng: 19.0770, // Torres de Serranos koordináták
+    type: "altitude_challenge",
+    targetDiff: 20, // 20 méter szintkülönbség
+    finalAnswer: "MAGASSÁG"
+    },
+    { 
+        title: "5. Állomás: Fotó", 
         desc: "Készíts egy fotót a helyszínen!", 
         lat: 47.8168, lng: 19.0770, 
         type: "photo",
         answer: "KULCS" 
     },
     { 
-        title: "5. Állomás: Város-Kvíz", 
+        title: "6. Állomás: Város-Kvíz", 
         type: "quiz",
         lat: 47.8168, lng: 19.0770, 
         questions: [
@@ -57,7 +66,7 @@ const tasks = [
         finalAnswer: "EURÓPA"
     },
     { 
-        title: "6. Állomás: Dódzsó Puzzle", 
+        title: "7. Állomás: Dódzsó Puzzle", 
         type: "puzzle",
         lat: 47.8168, lng: 19.0770, 
         img: "Gemini_Generated.jpg", 
@@ -70,6 +79,7 @@ let currentQuizStep = 0;
 let solvedWords = [];
 let isTaskActive = false;
 let puzzlePieces = [];
+let startAltitude = null;
 const gridSize = 5;
 
 // GPS Figyelés
@@ -93,7 +103,7 @@ function initTask() {
     document.getElementById('success-screen').classList.add('hidden');
     document.getElementById('task-title').innerText = task.title;
     
-    ['photo-area', 'quiz-area', 'puzzle-area', 'answer-area', 'text-quiz-area', 'info-area'].forEach(id => {
+    ['photo-area', 'quiz-area', 'puzzle-area', 'answer-area', 'text-quiz-area', 'info-area', 'altitude-area'].forEach(id => {
         const el = document.getElementById(id);
         if(el) el.classList.add('hidden');
     });
@@ -114,6 +124,10 @@ function initTask() {
         showQuizStep();
     } else if (task.type === "puzzle") {
         initPuzzle();
+    } else if (task.type === "altitude_challenge") {
+        document.getElementById('altitude-area').classList.remove('hidden');
+        document.getElementById('task-desc').innerText = task.desc;
+        startAltitude = null; // Reseteljük a kezdőpontot
     }
 }
 
@@ -210,6 +224,38 @@ function renderPuzzle() {
         grid.appendChild(div);
     });
 }
+
+// A GPS figyelő részt (watchPosition) egészítsük ki:
+navigator.geolocation.watchPosition(pos => {
+    const task = tasks[currentIdx];
+    const lat = pos.coords.latitude;
+    const lng = pos.coords.longitude;
+    const currentAlt = pos.coords.altitude;
+    
+    const dist = getDistance(lat, lng, task.lat, task.lng);
+    
+    if (dist < 20) {
+        document.getElementById('status').innerText = "📍 Megérkeztél a toronyhoz!";
+        if (!isTaskActive) { initTask(); isTaskActive = true; }
+        
+        // Speciális logika a magasság kihíváshoz
+        if (task.type === "altitude_challenge" && currentAlt !== null) {
+            if (startAltitude === null) {
+                startAltitude = currentAlt; // Első mérés rögzítése
+            }
+            
+            const diff = Math.abs(currentAlt - startAltitude);
+            document.getElementById('alt-progress').innerText = `Megtett szint: ${Math.round(diff)} / ${task.targetDiff} m`;
+            
+            if (diff >= task.targetDiff) {
+                solvedWords.push(task.finalAnswer);
+                finishTask();
+            }
+        }
+    } else {
+        // ... (távolság kijelzése)
+    }
+}, null, { enableHighAccuracy: true });
 
 function swapPieces(pos) {
     if (window.selectedPiece === undefined) {
