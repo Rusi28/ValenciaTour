@@ -11,8 +11,8 @@
         .hidden { display: none !important; }
         input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
         #status { font-size: 13px; color: #666; margin-bottom: 15px; font-style: italic; }
-        #success-screen { text-align: center; display: flex; flex-direction: column; align-items: center; }
-        #reward-image { width: 100%; max-width: 200px; border-radius: 15px; margin: 20px 0; }
+        #success-screen, #finish-screen { text-align: center; display: flex; flex-direction: column; align-items: center; }
+        #reward-image, #final-gift-image, .birthday-img { width: 100%; max-width: 250px; border-radius: 15px; margin: 20px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         .quiz-img { width: 100%; border-radius: 10px; margin-bottom: 10px; }
     </style>
 </head>
@@ -75,10 +75,26 @@
     </div>
 
     <div id="finish-screen" class="hidden">
-        <h2>Gratulálok!</h2>
-        <div id="final-results"></div>
+        <h2 style="color: #007bff;">GRATULÁLUNK! 🥳</h2>
+        <p>Teljesítettétek az összes állomást!</p>
+        
+        <img id="final-gift-image" src="final.jpg" alt="Záró ajándék">
+        
+        <div id="final-challenge-area">
+            <p><strong>Utolsó feladat:</strong> Hány hetesek lettetek pontosan a mai napon?</p>
+            <input type="number" id="weeksInput" placeholder="Hetek száma...">
+            <button class="btn" onclick="checkFinalWeeks()">Ellenőrzés</button>
+        </div>
+
+        <div id="re-show-first" class="hidden">
+            <hr style="width: 80%; margin: 20px 0; border: 0; border-top: 1px solid #ccc;">
+            <p>Emlékeztek még, hol kezdődött?</p>
+            <img src="1.jpg" class="birthday-img" alt="Első állomás emléke">
+            <h3 style="color: #e91e63; margin-top: 10px;">BOLDOG SZÜLETÉSNAPOT! ❤️</h3>
+        </div>
     </div>
 </div>
+
 <script src="app.js"></script>
 </body>
 </html>
