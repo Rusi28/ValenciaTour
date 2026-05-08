@@ -1,48 +1,23 @@
+// --- FELADATOK ADATBÁZISA ---
 const tasks = [
     { title: "1. Állomás: Edificio del Reloj", desc: "Keressétek meg az óratorony főépületét!", lat: 47.8168, lng: 19.0770, type: "text_quiz", question: "Mit ábrázol a szélkakas?", answer: "VITORLÁS", finalAnswer: "VITORLÁS" },
     { title: "2A Lépés: Palacio de la Música", desc: "Irány a Turia park!", lat: 47.8168, lng: 19.0770, type: "info_step", infoText: "Van nálatok valami, ami nem a tiétek! Ha megtaláljátok, akkor ti is bebizonyíthatjátok, hogy értetek a zenéhez. Megvan?", buttonText: "MEGVAN", finalAnswer: "ZENÉSZEK" },
     { title: "2. Állomás: Palacio de la Música", desc: "Irány a Turia park és a szökőkút!", lat: 47.8168, lng: 19.0770, type: "text_quiz", question: "Mi a kedvenc helyük?", answer: "CENTRAL PERK", finalAnswer: "CENTRAL PERK" },
     { title: "3. Állomás: Puerta del Mar", desc: "Keressétek meg a diadalívet!", lat: 47.8168, lng: 19.0770, type: "text_quiz", question: "Ki írt operát a diadalív tetején levő állatról?", answer: "JOHANN STRAUSS", finalAnswer: "JOHANN STRAUSS" },
-    { 
-    title: "4. Állomás: Torres de Serranos", 
-    desc: "Másszatok fel a toronyba!", 
-    lat: 47.8168, lng: 19.0770, 
-    type: "altitude_challenge", 
-    targetDiff: 20, 
-    radius: 50, // Speciális nagyobb sugár ennél a feladatnál
-    finalAnswer: "MAGASSÁG" 
-    },
-    { 
-    title: "5. Állomás: Selyembörze (La Lonja)", 
-    desc: "Látogassatok el a tőzsdepalotához a központi piaccal szemben!", 
-    lat: 47.8168, lng: 19.0770,
-    //lat: 39.4744, lng: -0.3784, // La Lonja koordináták
-    type: "text_quiz",
-    question: "Mik nőnek az udvaron?",
-    answer: "NARANCSOK",
-    finalAnswer: "NARANCSOK"
-    },
-    { 
-    title: "6. Állomás: Valencia Cathedral", 
-    desc: "Keressétek meg a lenyűgöző katedrálist a Plaza de l'Almoina felől!", 
-    lat: 47.8168, lng: 19.0770, 
-    //lat: 39.4753, lng: -0.3751, // Valencia Cathedral koordináták
-    type: "text_quiz",
-    question: "Ki volt a leghíresebb keresője a bent őrzött erekjének?",
-    answer: "ARTHUR",
-    finalAnswer: "ARTHUR"
-    },
+    { title: "4. Állomás: Torres de Serranos", desc: "Másszatok fel a toronyba!", lat: 47.8168, lng: 19.0770, type: "altitude_challenge", targetDiff: 20, radius: 50, finalAnswer: "MAGASSÁG" },
+    { title: "5. Állomás: Selyembörze (La Lonja)", desc: "Látogassatok el a tőzsdepalotához a központi piaccal szemben!", lat: 47.8168, lng: 19.0770, type: "text_quiz", question: "Mik nőnek az udvaron?", answer: "NARANCSOK", finalAnswer: "NARANCSOK" },
+    { title: "6. Állomás: Valencia Cathedral", desc: "Keressétek meg a katedrálist a Plaza de l'Almoina felől!", lat: 47.8168, lng: 19.0770, type: "text_quiz", question: "Ki volt a leghíresebb keresője a bent őrzött erekjének?", answer: "ARTHUR", finalAnswer: "ARTHUR" },
     { title: "7. Állomás: Placa de Bous", desc: "Készítsetek fotót ott ahol a szegény bikákat megölik!", lat: 47.8168, lng: 19.0770, type: "photo", answer: "KULCS" },
-    { title: "8A Lépés: Mercat de Colon", desc: "Itt lehet kóstolni!", lat: 47.8168, lng: 19.0770, type: "info_step", infoText: "Lehet találtok is valamit. Megvan?", buttonText: "MEGVAN", finalAnswer: "" },
+    { title: "8A Lépés: Mercat de Colon", desc: "Irány kóstolni!", lat: 47.8168, lng: 19.0770, type: "info_step", infoText: "Lehet találtok is valamit. Megvan?", buttonText: "MEGVAN", finalAnswer: "KÓSTOLÓ" },
     { title: "8. Állomás: Mercat de Colon", desc: "Játszátok le!", lat: 47.8168, lng: 19.0770, type: "text_quiz", question: "Ki volt a hangja a főgonosznak?", answer: "FORGÁCS PÉTER", finalAnswer: "FORGÁCS PÉTER" },
-    { title: "9. Állomás: HEMISFÈRIC", type: "puzzle", lat: 47.8168, lng: 19.0770, infoText: "Ez a tudomány helye, lássuk mit tudtok?", img: "Gemini_Generated.jpg", finalAnswer: "Tudomány" }
-    { title: "10. Állomás: Oceanogràfic València", type: "quiz", lat: 47.8168, lng: 19.0770, infoText: "EZ az oceán világa, de hol voltatok eddig a szárazon?", questions: [
+    { title: "9. Állomás: HEMISFÈRIC", type: "puzzle", lat: 47.8168, lng: 19.0770, infoText: "Ez a tudomány helye, lássuk mit tudtok?", img: "Gemini_Generated.jpg", finalAnswer: "TUDOMÁNY" }, // Itt hiányzott a vessző!
+    { title: "10. Állomás: Oceanogràfic València", type: "quiz", lat: 47.8168, lng: 19.0770, infoText: "Ez az óceán világa, de hol voltatok eddig?", questions: [
         { imgQ: "Barcelona1.jpg", imgA: "BarcelonaM1.jpg", answer: "Barcelona" },
         { imgQ: "Isztambul1.jpg", imgA: "IsztambulM1.jpg", answer: "Isztambul" },
         { imgQ: "Marseille1.jpg", imgA: "MarseilleM1.jpg", answer: "Marseille" },
         { imgQ: "Szlovénia1.jpg", imgA: "SzlovéniaM1.jpg", answer: "Szlovénia" },
         { imgQ: "Porec1.jpg", imgA: "PorecM1.jpg", answer: "Porec" }
-    ], finalAnswer: "TRAVEL" },
+    ], finalAnswer: "TRAVEL" }
 ];
 
 let currentIdx = 0;
@@ -53,11 +28,11 @@ let startAltitude = null;
 let maxDiff = 0;
 let puzzlePieces = [];
 const gridSize = 5;
-let totalMovedDistance = 0; // Ebben gyűjtjük a megtett métereket
+let totalMovedDistance = 0;
 let lastLat = null;
 let lastLng = null;
 
-// --- JAVÍTOTT GPS FIGYELÉS ---
+// GPS Figyelés kumulatív távolsággal
 if (navigator.geolocation) {
     navigator.geolocation.watchPosition(pos => {
         const task = tasks[currentIdx];
@@ -69,49 +44,43 @@ if (navigator.geolocation) {
 
         if (distFromTarget < activeRadius) {
             document.getElementById('status').innerText = "📍 Területen belül vagy!";
-            
             if (!isTaskActive) { 
                 initTask(); 
                 isTaskActive = true; 
-                totalMovedDistance = 0; // Resetelés az induláskor
+                totalMovedDistance = 0;
                 lastLat = lat;
                 lastLng = lng;
             }
             
-            // TÉNYLEGES MEGTETT ÚT SZÁMÍTÁSA (Kumulatív)
             if (task.type === "altitude_challenge") {
-                // Kiszámoljuk az elmozdulást az előző mérés óta
                 const moveStep = getDistance(lat, lng, lastLat, lastLng);
-                
-                // Csak akkor adjuk hozzá, ha a mérés nem "ugrálás" (pl. > 1 méter)
                 if (moveStep > 1 && moveStep < 10) { 
                     totalMovedDistance += moveStep;
-                    lastLat = lat; // Frissítjük az utolsó ismert pontot
+                    lastLat = lat;
                     lastLng = lng;
                 }
-                
                 document.getElementById('alt-progress').innerText = `Megtett út: ${Math.round(totalMovedDistance)} / ${task.targetDiff} m`;
-                
                 if (totalMovedDistance >= task.targetDiff) {
                     solvedWords.push(task.finalAnswer);
                     finishTask();
                 }
             }
         } else {
-            document.getElementById('status').innerText = `📍 Menj a helyszínre! Távolság: ${Math.round(distFromTarget)}m`;
+            document.getElementById('status').innerText = `📍 Távolság: ${Math.round(distFromTarget)}m`;
             document.getElementById('game-ui').classList.add('hidden');
             isTaskActive = false;
-            lastLat = null; // Ha kimegy a körből, nullázzuk az előző pontot
+            lastLat = null;
         }
     }, null, { enableHighAccuracy: true, maximumAge: 1000 });
 }
+
 function initTask() {
     const task = tasks[currentIdx];
     document.getElementById('game-ui').classList.remove('hidden');
     document.getElementById('success-screen').classList.add('hidden');
     document.getElementById('task-title').innerText = task.title;
-    startAltitude = null; maxDiff = 0; // Reset a kihíváshoz
     
+    // UI reset
     ['photo-area', 'quiz-area', 'puzzle-area', 'answer-area', 'text-quiz-area', 'info-area', 'altitude-area'].forEach(id => {
         const el = document.getElementById(id);
         if(el) el.classList.add('hidden');
@@ -129,13 +98,17 @@ function initTask() {
         document.getElementById('task-desc').innerText = task.desc;
         document.getElementById('photo-area').classList.remove('hidden');
     } else if (task.type === "quiz") {
+        document.getElementById('task-desc').innerText = task.infoText || "";
         showQuizStep();
     } else if (task.type === "puzzle") {
+        document.getElementById('task-desc').innerText = task.infoText || "";
         initPuzzle();
     } else if (task.type === "altitude_challenge") {
         document.getElementById('altitude-area').classList.remove('hidden');
     }
 }
+
+// ... (A többi függvény - checkTextAnswer, showQuizStep, checkQuizAnswer stb. - maradhat változatlanul)
 
 function checkTextAnswer() {
     const task = tasks[currentIdx];
@@ -213,6 +186,7 @@ function swapPieces(pos) {
 function finishTask() {
     document.getElementById('game-ui').classList.add('hidden');
     const img = document.getElementById('reward-image');
+    // Itt a currentIdx-et használjuk, mert az index.html-ben lévő képeid 1.jpg-től indulnak
     img.src = (currentIdx + 1) + ".jpg";
     document.getElementById('success-screen').classList.remove('hidden');
     document.getElementById('success-info').innerText = `Kód: ${solvedWords[solvedWords.length - 1]}`;
@@ -241,7 +215,10 @@ function checkWord() {
     else { alert("Rossz!"); }
 }
 
-function confirmInfoStep() { solvedWords.push(tasks[currentIdx].finalAnswer); finishTask(); }
+function confirmInfoStep() { 
+    solvedWords.push(tasks[currentIdx].finalAnswer || "LÉPÉS"); 
+    finishTask(); 
+}
 
 document.getElementById('cameraInput').addEventListener('change', function() {
     if (this.files.length > 0) document.getElementById('answer-area').classList.remove('hidden');
