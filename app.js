@@ -13,23 +13,34 @@ const tasks = [
     finalAnswer: "MAGASSÁG" 
     },
     { 
-    title: "5. Állomás: Valencia Cathedral", 
+    title: "5. Állomás: Selyembörze (La Lonja)", 
+    desc: "Látogassatok el a tőzsdepalotához a központi piaccal szemben!", 
+    lat: 47.8168, lng: 19.0770,
+    //lat: 39.4744, lng: -0.3784, // La Lonja koordináták
+    type: "text_quiz",
+    question: "Mik nőnek az udvaron?",
+    answer: "NARANCSOK",
+    finalAnswer: "NARANCSOK"
+    },
+    { 
+    title: "6. Állomás: Valencia Cathedral", 
     desc: "Keressétek meg a lenyűgöző katedrálist a Plaza de l'Almoina felől!", 
-    lat: 39.4753, lng: -0.3751, // Valencia Cathedral koordináták
+    lat: 47.8168, lng: 19.0770, 
+    //lat: 39.4753, lng: -0.3751, // Valencia Cathedral koordináták
     type: "text_quiz",
     question: "Ki volt a leghíresebb keresője a bent őrzött erekjének?",
-    answer: "INDIANA JONES",
-    finalAnswer: "INDIANA JONES"
+    answer: "ARTHUR",
+    finalAnswer: "ARTHUR"
     },
-    { title: "5. Állomás: Fotó", desc: "Készíts egy fotót a helyszínen!", lat: 47.8168, lng: 19.0770, type: "photo", answer: "KULCS" },
-    { title: "6. Állomás: Város-Kvíz", type: "quiz", lat: 47.8168, lng: 19.0770, questions: [
+    { title: "7. Állomás: Fotó", desc: "Készíts egy fotót a helyszínen!", lat: 47.8168, lng: 19.0770, type: "photo", answer: "KULCS" },
+    { title: "8. Állomás: Város-Kvíz", type: "quiz", lat: 47.8168, lng: 19.0770, questions: [
         { imgQ: "Barcelona1.jpg", imgA: "BarcelonaM1.jpg", answer: "Barcelona" },
         { imgQ: "Isztambul1.jpg", imgA: "IsztambulM1.jpg", answer: "Isztambul" },
         { imgQ: "Marseille1.jpg", imgA: "MarseilleM1.jpg", answer: "Marseille" },
         { imgQ: "Szlovénia1.jpg", imgA: "SzlovéniaM1.jpg", answer: "Szlovénia" },
         { imgQ: "Porec1.jpg", imgA: "PorecM1.jpg", answer: "Porec" }
-    ], finalAnswer: "EURÓPA" },
-    { title: "7. Állomás: Dódzsó Puzzle", type: "puzzle", lat: 47.8168, lng: 19.0770, img: "Gemini_Generated.jpg", finalAnswer: "FEGYELEM" }
+    ], finalAnswer: "TRAVEL" },
+    { title: "9. Állomás: Dódzsó Puzzle", type: "puzzle", lat: 47.8168, lng: 19.0770, img: "Gemini_Generated.jpg", finalAnswer: "FEGYELEM" }
 ];
 
 let currentIdx = 0;
