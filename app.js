@@ -10,6 +10,15 @@ const tasks = [
         finalAnswer: "VITORLÁS"
     },
     { 
+        title: "2A Lépés: Palacio de la Música", 
+        desc: "Irány a Turia park és az üvegpalota!", 
+        lat: 47.8168, lng: 19.0770, 
+        type: "info_step", // Új típus
+        infoText: "Van nálatok valami, ami nem a tiétek! Ha megtaláljátok, akkor ti is bebizonyíthatjátok, hogy értetek a zenéhez. Megvan?",
+        buttonText: "MEGVAN",
+        finalAnswer: "ZENÉSZEK" // Ez csak egy belső azonosító a jutalomképhez
+    },
+    { 
         title: "2. Állomás: Palacio de la Música", 
         desc: "Irány a Turia park és a szökőkút!", 
         lat: 47.8168, lng: 19.0770, 
@@ -84,12 +93,16 @@ function initTask() {
     document.getElementById('success-screen').classList.add('hidden');
     document.getElementById('task-title').innerText = task.title;
     
-    ['photo-area', 'quiz-area', 'puzzle-area', 'answer-area', 'text-quiz-area'].forEach(id => {
+    ['photo-area', 'quiz-area', 'puzzle-area', 'answer-area', 'text-quiz-area', 'info-area'].forEach(id => {
         const el = document.getElementById(id);
         if(el) el.classList.add('hidden');
     });
     
-    if (task.type === "text_quiz") {
+    if (task.type === "info_step") {
+        document.getElementById('info-area').classList.remove('hidden');
+        document.getElementById('info-text').innerText = task.infoText;
+        document.getElementById('info-btn').innerText = task.buttonText;
+    } else if (task.type === "text_quiz") {
         document.getElementById('task-desc').innerText = task.desc;
         document.getElementById('text-quiz-area').classList.remove('hidden');
         document.getElementById('text-question').innerText = task.question;
@@ -242,6 +255,12 @@ function checkWord() {
     const val = document.getElementById('wordInput').value.toUpperCase().trim();
     if (val === tasks[currentIdx].answer) { solvedWords.push(val); finishTask(); }
     else { alert("Rossz szó!"); }
+}
+
+function confirmInfoStep() {
+    const task = tasks[currentIdx];
+    solvedWords.push(task.finalAnswer);
+    finishTask(); // Meghívja a Miniont és a TOVÁBB gombot
 }
 
 document.getElementById('cameraInput').addEventListener('change', function() {
