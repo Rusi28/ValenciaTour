@@ -3,7 +3,7 @@ const tasks = [
     { 
         title: "1. Állomás: Edificio del Reloj", 
         desc: "Keressétek meg az óratorony főépületét a kikötőben!", 
-        lat: 39.4619, lng: -0.3315, // Edificio del Reloj koordináták
+        lat: 47.8168, lng: 19.0770, // Edificio del Reloj koordináták
         type: "text_quiz",
         question: "Mit ábrázol a szélkakas?",
         answer: "VITORLÁS",
@@ -12,7 +12,7 @@ const tasks = [
     { 
         title: "2. Állomás: Palacio de la Música", 
         desc: "Irány a Turia park és az üvegpalota a szökőkúttal!", 
-        lat: 39.4665, lng: -0.3545, // Palacio de la Música koordináták
+        lat: 47.8168, lng: 19.0770, // Palacio de la Música koordináták
         type: "text_quiz",
         question: "Ez a zene háza, lássuk mennyire értetek hozzá? Nincs nálatok valami ami nem a tietek? Mi a kedvenc helyük?",
         answer: "CENTRAL PERK",
@@ -21,7 +21,7 @@ const tasks = [
     { 
         title: "3. Állomás: Puerta del Mar", 
         desc: "Keressétek meg a diadalívet a belváros szélén!", 
-        lat: 39.4721, lng: -0.3685, // Puerta del Mar koordináták
+        lat: 47.8168, lng: 19.0770, // Puerta del Mar koordináták
         type: "text_quiz",
         question: "Ki írt operát a diadalív tetején levő állatról?",
         answer: "JOHANN STRAUSS",
